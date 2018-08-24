@@ -1,9 +1,11 @@
 $(function () {
 
+  const URI = '/api/products';
+
   // GET PRODUCTS
-  $('#getProducts').on('click', function() {
+  $('#getProducts').on('click', () => {
     $.ajax({
-      url: '/products',
+      url: URI,
       success: function (products) {
         let tbody = $('tbody');
         tbody.html('');
@@ -26,12 +28,12 @@ $(function () {
   });
 
   // POST PRODUCTS
-  $('#productForm').on('submit', function (e) {
+  $('#productForm').on('submit', (e) => {
     e.preventDefault();
     let newProduct = $('#newProduct');
 
     $.ajax({
-      url: "/products",
+      url: URI,
       method: 'POST',
       data: {
         name: newProduct.val()
@@ -50,10 +52,9 @@ $(function () {
     let row = $(this).closest('tr');
     let id = row.find('.id').text();
     let name = row.find('.name').val();
-    console.log(name)
 
     $.ajax({
-      url: "/products/" + id,
+      url: `${URI}/${id}`,
       method: 'PUT',
       data: {
         name: name 
@@ -70,10 +71,9 @@ $(function () {
     let id = row.find('.id').text();
 
     $.ajax({
-      url: "/products/" + id,
+      url: `${URI}/${id}`,
       method: 'DELETE',
       success: function (response) {
-       console.log(response);
        $('#getProducts').click();
       }
     });
